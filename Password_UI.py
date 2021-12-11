@@ -1,10 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
-import random
-import string
+from Password_Generator import generate_password
 
 
-class PasswordGen(tk.Tk):
+class PasswordApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Password Generator')
@@ -68,8 +67,7 @@ class PasswordGen(tk.Tk):
 
     def starting_lists(self, event):
         self.user_num.set(self.lengthEntry.get())
-        print('Number Found: ' + self.user_num.get())
-
+        
         values_list = [num for num in range(0, int(self.user_num.get()) + 1)]
         options = ['Yes', 'No']
 
@@ -110,29 +108,9 @@ class PasswordGen(tk.Tk):
             self.lowerEntry['values'] = [num for num in range(0, lower_length + 1)]
             self.digitsEntry['values'] = [num for num in range(0, digit_length + 1)]
 
-
-def generate_password(uppercase, lowercase, digits, special=False):
-    upper_let = random.sample(list(string.ascii_uppercase), k=uppercase)
-    lower_lets = random.sample(list(string.ascii_lowercase), k=lowercase)
-    num_choice = ''.join(random.choices(list(string.digits), k=digits))
-    special_choice = random.choice(list('$!*.%'))
-
-    first_control = upper_let[0] if uppercase > 0 else ''
-    if first_control != '':
-        middle_control = 0 if (uppercase - 1) + lowercase <= 0 else (uppercase - 1) + lowercase
-    else:
-        middle_control = lowercase
-    middle_values = ''.join(random.sample(upper_let[1:] + lower_lets, k=middle_control))
-
-    if special:
-        password = first_control + middle_values + num_choice + special_choice
-    else:
-        password = first_control + middle_values + num_choice
-    return password
-
-
+            
 def main():
-    app = PasswordGen()
+    app = PasswordApp()
     app.mainloop()
 
 
